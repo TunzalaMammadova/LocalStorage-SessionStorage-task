@@ -75,7 +75,7 @@ function getBasketCount(arr) {
     let basketCount = 0;
 
     if (arr.length != 0) {
-        for (const item of basket) {
+        for (const item of arr) {
             basketCount += item.count;
         }
     }
@@ -86,11 +86,11 @@ getBasketPrice(basket);
 
 function getBasketPrice(arr) {
 
-    let basketPrice = 1;
+    let basketPrice = 0;
 
     if (arr.length != 0) {
 
-        for (const item of basket) {
+        for (const item of arr) {
             basketPrice += item.count * item.price;
         }
     }
@@ -103,31 +103,31 @@ let addBtns = document.querySelectorAll("#products .add-btn");
 addBtns.forEach(btn => {
     btn.addEventListener("click", function (e) {
         e.preventDefault();
-        let productId = parseInt(this.parentNode.parentNode.getAttribute("data-id"));
-        let productName = this.parentNode.firstElementChild.innerText;
-        let productDesc = this.parentNode.firstElementChild.nextElementSibling.innerText;
-        let productImage = this.parentNode.previousElementSibling.getAttribute("src");
-        let productPrice = this.parentNode.firstElementChild.nextElementSibling.nextElementSibling.innerText;
+        let productId = parseInt(btn.parentNode.parentNode.getAttribute("data-id"));
+        let productName = btn.parentNode.firstElementChild.innerText;
+        let productDesc = btn.parentNode.firstElementChild.nextElementSibling.innerText;
+        let productImage = btn.parentNode.previousElementSibling.getAttribute("src");
+        let productPrice = btn.parentNode.firstElementChild.nextElementSibling.nextElementSibling.innerText;
 
         let existProduct = basket.find(m => m.id == productId);
         if (existProduct != undefined) {
             existProduct.count++;
-        }
-
-        else {
+        }else {
             basket.push({
                 id: productId,
                 name: productName,
                 description: productDesc,
                 image: productImage,
-                price: productPrice,
+                price: parseInt(productPrice),
                 count: 1
             })
         }
 
         getBasketCount(basket);
         getBasketPrice(basket);
+
         localStorage.setItem("basket", JSON.stringify(basket))
+        
     })
 });
 
