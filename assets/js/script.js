@@ -94,7 +94,7 @@ function getBasketPrice(arr) {
             basketPrice += item.count * item.price;
         }
     }
-    document.querySelector(".basket-price").innerText = basketPrice;
+    document.querySelector(".basketPrice").innerText = basketPrice;
 }
 
 
