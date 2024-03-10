@@ -57,7 +57,8 @@
 // console.log(JSON.parse(localStorage.getItem("datas")));
 
 let basket = [];
-
+let basketCountSpan = document.querySelector(".basket-count");
+let basketPrice = document.querySelector(".basket-price")
 
 if (JSON.parse(localStorage.getItem("basket")) == null) {
     localStorage.setItem("basket", JSON.stringify(basket));
@@ -74,11 +75,26 @@ function getBasketCount(arr) {
     let basketCount = 0;
 
     if (arr.length != 0) {
-        for (const item of arr) {
+        for (const item of basket) {
             basketCount += item.count;
         }
     }
-    document.querySelector(".navigation .basket-count").innerText = basketCount;
+    document.querySelector(".basket-count").innerText = basketCount;
+}
+
+getBasketPrice(basket);
+
+function getBasketPrice(arr) {
+
+    let basketPrice = 1;
+
+    if (arr.length != 0) {
+
+        for (const item of basket) {
+            basketPrice += item.count * item.price;
+        }
+    }
+    document.querySelector(".basket-price").innerText = basketPrice;
 }
 
 
@@ -97,6 +113,7 @@ addBtns.forEach(btn => {
         if (existProduct != undefined) {
             existProduct.count++;
         }
+
         else {
             basket.push({
                 id: productId,
@@ -109,6 +126,7 @@ addBtns.forEach(btn => {
         }
 
         getBasketCount(basket);
+        getBasketPrice(basket);
         localStorage.setItem("basket", JSON.stringify(basket))
     })
 });
